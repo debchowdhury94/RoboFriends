@@ -2,21 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import Card from './components/Card';
-import { robots } from './robots';
+import MainApp from './MainApp';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <React.Fragment>
-      {
-        robots.map((robot)=> {
-          return (
-            <Card id={robot.id} name={robot.name} email={robot.email} />
-          )
-        })
-      }
-    </React.Fragment>
+   <MainApp />
   </React.StrictMode>
 );
 
