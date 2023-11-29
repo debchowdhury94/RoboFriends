@@ -3,6 +3,7 @@ import Card from "./Card";
 
 export default function CardList(props) {
   const { robots } = props;
+
   return (
     <React.Fragment>
       {robots.map((robot) => {
