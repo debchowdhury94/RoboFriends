@@ -1,17 +1,35 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
-import MainApp from './MainApp';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import MainApp from "./containers/MainApp";
+import { Provider } from "react-redux";
+import { searchRobotsReducer, requestRobotsReducer } from "./reducers";
+import { createStore, applyMiddleware, combineReducers } from "redux";
+import { createLogger } from 'redux-logger';
+import { thunk } from 'redux-thunk'
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// adding a redux middleware Logger to log the action and next state, etc
+const logger = createLogger();
+
+// combine all reducers into a root reducer
+const rootReducer = combineReducers({ searchRobotsReducer, requestRobotsReducer})
+
+//const store = createStore(rootReducer);
+
+//redux "createStore" is now deprecated and hence we will use configureStore from redux-toolkit
+// thunkMiddleware is for handling async actions
+const store = createStore(rootReducer, applyMiddleware(thunk, logger));
+
+//const store = configureStore(searchRobotsReducer);
+
+
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-   <MainApp />
+    <Provider store={store}>
+      <MainApp />
+    </Provider>
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
